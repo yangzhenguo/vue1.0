@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .error {
+            color: red;
+        }
+        textarea {
+            display: block;
+            width: 400px;
+            height: 200px;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <form @submit.prevent="submit">
+        <textarea v-model="message"></textarea>
+        <button :disabled="!message">Send message</button>
+        <br>
+        <button type="button" @click="count ++">button {{ count }}</button>
+    </form>
+    <pre>{{ $data | json }}</pre>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.14/vue.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: {
+            message: '',
+            count: 0
+        },
+        methods: {
+            submit: function () {
+                alert(new Date())
+            }
+        }
+    })
+</script>
+</body>
+</html>
