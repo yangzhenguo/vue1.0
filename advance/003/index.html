@@ -20,6 +20,9 @@
         <input type="radio" value="msg" name="type" id="msg" v-model="type">
         <label for="msg">Msg</label>
     </div>
+    <div>
+        <p v-for="(item,index) in ['ha', 'he', 'ga', 'ge', 'hi']" :key="index">{{ item }} - {{ index }}</p>
+    </div>
 </div>
 <script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
 <script src="index.js"></script>
