@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/semantic-ui/2.4.1/semantic.css">
+    <title>Document</title>
+</head>
+<body>
+<div id="app">
+    <hello :type="type" text="Hello World"></hello>
+    <div class="ui radio checkbox">
+        <input type="radio" value="face" name="type" id="type" v-model="type">
+        <label for="type">Face</label>
+    </div>
+    <div class="ui radio checkbox">
+        <input type="radio" value="msg" name="type" id="msg" v-model="type">
+        <label for="msg">Msg</label>
+    </div>
+</div>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.js"></script>
+<script src="index.js"></script>
+
+<template id="hello-comp">
+    <div>
+        <div v-once :class="type">{{ text }}</div>
+    </div>
+</template>
+</body>
+</html>
