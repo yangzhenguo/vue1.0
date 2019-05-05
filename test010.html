@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap.css">
+    <style>
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<div id="app" class="container">
+    <task></task>
+</div>
+<template id="task-comp">
+    <h3>Remaining <span v-show="remaining.length">{{ remaining.length }}</span></h3>
+    <ul class="list-group">
+        <li class="list-group-item" v-for="task in list" :class="{completed: task.completed}" @click="toggle(task)">
+            {{ task.sha }} - {{ task.completed }}
+            <button class="btn btn-default float-right" @click.stop="list.$remove(task)">x</button>
+        </li>
+    </ul>
+</template>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.14/vue.js"></script>
+<script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.js"></script>
+<script>
+    Vue.component('task', {
+        template: '#task-comp',
+        data: function () {
+            return {
+                list: []
+            }
+        },
+        computed: {
+            remaining: function () {
+                return this.list.filter(function (item) {
+                    return item.completed
+                })
+            }
+        },
+        methods: {
+            getData: function () {
+                var _this = this
+                $.getJSON('https://api.github.com/repos/momodiy/sudoku/commits?per_page=10&sha=master', function (data) {
+                    _this.list = data
+                })
+            },
+            toggle: function (task) {
+                task.completed = !task.completed
+                Vue.set(this.list, this.list.indexOf(task), task)
+            }
+        },
+        created: function () {
+            this.getData()
+        }
+    })
+    new Vue({
+        el: '#app'
+    })
+</script>
+</body>
+</html>

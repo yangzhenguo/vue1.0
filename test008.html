@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        * {
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .completed {
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body>
+<div id="app">
+    <task :list="tasks"></task>
+</div>
+<template id="task-comp">
+    <ul>
+        <li v-for="task in list" :class="{completed: task.completed}" @click="task.completed = !task.completed">{{ task.body }}</li>
+    </ul>
+</template>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.14/vue.js"></script>
+<script>
+    Vue.component('task', {
+        template: '#task-comp',
+        props: ['list']
+    })
+    new Vue({
+        el: '#app',
+        data: {
+            tasks: [{
+                body: 'go to movie', completed: true
+            }, {
+                body: 'go to shop', completed: false
+            }, {
+                body: 'go to home', completed: true
+            }]
+        }
+    })
+</script>
+</body>
+</html>
