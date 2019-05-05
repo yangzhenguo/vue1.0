@@ -9,6 +9,11 @@
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
+        .list-group-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
         .completed {
             text-decoration: line-through;
         }
@@ -21,8 +26,8 @@
 <template id="task-comp">
     <h3>Remaining <span v-show="remaining.length">{{ remaining.length }}</span></h3>
     <ul class="list-group">
-        <li class="list-group-item" v-for="task in list" :class="{completed: task.completed}" @click="task.completed = !task.completed">
-            {{ task.sha }} - {{ task.completed }}
+        <li class="list-group-item" v-for="task in list" @click="task.completed = !task.completed">
+            <span :class="{completed: task.completed}">{{ task.sha }}</span>
             <button class="btn btn-default float-right" @click.stop="list.$remove(task)">x</button>
         </li>
     </ul>
