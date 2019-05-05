@@ -21,7 +21,7 @@
 <template id="task-comp">
     <h3>Remaining <span v-show="remaining.length">{{ remaining.length }}</span></h3>
     <ul class="list-group">
-        <li class="list-group-item" v-for="task in list" :class="{completed: task.completed}" @click="toggle(task)">
+        <li class="list-group-item" v-for="task in list" :class="{completed: task.completed}" @click="task.completed = !task.completed">
             {{ task.sha }} - {{ task.completed }}
             <button class="btn btn-default float-right" @click.stop="list.$remove(task)">x</button>
         </li>
@@ -46,14 +46,12 @@
         },
         methods: {
             getData: function () {
-                var _this = this
                 $.getJSON('https://api.github.com/repos/momodiy/sudoku/commits?per_page=10&sha=master', function (data) {
-                    _this.list = data
-                })
-            },
-            toggle: function (task) {
-                task.completed = !task.completed
-                Vue.set(this.list, this.list.indexOf(task), task)
+                    this.list = data.map(function (item) {
+                        item.completed = false
+                        return item
+                    })
+                }.bind(this))
             }
         },
         created: function () {
